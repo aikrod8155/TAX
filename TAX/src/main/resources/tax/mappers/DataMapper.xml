@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="efia.tax.dao.DataDao">
+<select id="countByTable" parameterType="Map" resultType="int">
+        select count(*) from information_schema.TABLES
+        <where>
+            <if test="dbName != null">
+                and TABLE_SCHEMA = #{dbName}
+            </if>
+
+            and TABLE_NAME = #{tableName}
+
+        </where>
+
+        limit 1
+
+    </select>
+</mapper>
+
+

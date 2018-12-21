@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="efia.tax.dao.BusinessDao">
+	<resultMap type="Business" id="BusinessResult">
+		<result property="address" column="address"/>
+		<result property="seq" column="seq"/>
+		<result property="head" column="head"/>
+		<result property="name" column="name"/>
+		<result property="capital" column="capital"/>
+		<result property="founding" column="founding"/>
+		<result property="receipt" column="receipt"/>
+		<result property="typeCode1" column="typeCode1"/>
+		<result property="typeName1" column="typeName1"/>
+		<result property="typeCode2" column="typeCode2"/>
+		<result property="typeName2" column="typeName2"/>
+		<result property="typeCode3" column="typeCode3"/>
+		<result property="typeName3" column="typeName3"/>
+		<result property="typeCode4" column="typeCode4"/>
+		<result property="typeName4" column="typeName4"/>
+	</resultMap>
+	<select id="listByCondition" parameterType="Map" resultMap="BusinessResult">
+		select * from t_business 
+		where 1=1
+		<if test="address!=null">
+			and address like #{address}
+		</if>
+		<if test="seq!=null">
+			and seq=#{seq}
+		</if>
+		<if test="head!=null">
+			and head=#{head}
+		</if>
+		<if test="name!=null">
+			and name=#{name}
+		</if>
+		<if test="capital!=null">
+			and capital=#{capital}
+		</if>
+		<if test="founding!=null">
+			and founding=#{founding}
+		</if>
+		<if test="receipt!=null">
+			and receipt=#{receipt}
+		</if>
+		<if test="typeCode1!=null">
+			and (typeCode1=#{typeCode1} or typeCode2=#{typeCode1} or typeCode3=#{typeCode1})
+		</if>
+		<if test="typeName1!=null">
+			and (typeName1=#{typeName1} or typeName2=#{typeName1} or typeName3=#{typeName1})
+		</if>
+		<if test="typeCode2!=null">
+			and typeCode2=#{typeCode2}
+		</if>
+		<if test="typeName2!=null">
+			and typeName2=#{typeName2}
+		</if>
+		
+		<if test="typeCode3!=null">
+			and typeCode3=#{typeCode3}
+		</if>
+		<if test="typeName3!=null">
+			and typeName3=#{typeName3}
+		</if>
+		<if test="typeCode4!=null">
+			and typeCode4=#{typeCode4}
+		</if>
+		<if test="typeName4!=null">
+			and typeName4=#{typeName4}
+		</if>
+		<if test="limit != null and offset != null">
+
+            limit #{offset}, #{limit}
+
+        </if>
+		
+	</select>
+	<select id="coutByCondition" parameterType="Map" resultType="int">
+		select count(*) from t_business 
+		where 1=1
+		<if test="seq!=null">
+			and seq=#{seq}
+		</if>
+		
+	</select>
+	<insert id="create" parameterType="Business">
+		insert into t_business
+		<set>
+			<if test="address!=null">
+			 address=#{address},
+		</if>
+		<if test="seq!=null">
+			 seq=#{seq},
+		</if>
+		<if test="head!=null">
+			 head=#{head},
+		</if>
+		<if test="name!=null">
+			 name=#{name},
+		</if>
+		<if test="capital!=null">
+			 capital=#{capital},
+		</if>
+		<if test="founding!=null">
+			 founding=#{founding},
+		</if>
+		<if test="receipt!=null">
+			 receipt=#{receipt},
+		</if>
+		<if test="typeCode1!=null">
+			 typeCode1=#{typeCode1},
+		</if>
+		<if test="typeName1!=null">
+			 typeName1=#{typeName1},
+		</if>
+		<if test="typeCode2!=null">
+			 typeCode2=#{typeCode2},
+		</if>
+		<if test="typeName2!=null">
+			 typeName2=#{typeName2},
+		</if>
+		
+		<if test="typeCode3!=null">
+			 typeCode3=#{typeCode3},
+		</if>
+		<if test="typeName3!=null">
+			 typeName3=#{typeName3},
+		</if>
+		<if test="typeCode4!=null">
+			 typeCode4=#{typeCode4},
+		</if>
+		<if test="typeName4!=null">
+			 typeName4=#{typeName4},
+		</if>
+		</set>
+	</insert>
+
+
+</mapper>
