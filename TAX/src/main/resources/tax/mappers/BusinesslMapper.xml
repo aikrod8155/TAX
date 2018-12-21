@@ -20,6 +20,14 @@
 		<result property="typeCode4" column="typeCode4"/>
 		<result property="typeName4" column="typeName4"/>
 	</resultMap>
+	
+	<select id="getByPKey" parameterType="String" resultMap="BusinessResult">
+		select * from t_business 
+		where seq=#{seq}
+	</select>
+	
+	
+	
 	<select id="listByCondition" parameterType="Map" resultMap="BusinessResult">
 		select * from t_business 
 		where 1=1

@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.websocket.server.PathParam;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +33,31 @@ public class BusinessController {
 	
 	@Autowired
 	private BusinessService businessService;
+	
+	
+	
+	
+	@ApiResponses(value= {
+			@ApiResponse(code=500,message="琩高钵盽"),
+			@ApiResponse(code=200,message="琩高Θ"),
+	})
+	@ApiOperation(value="ㄌ参絪琩高戈")
+	@RequestMapping(value="/business/{seq}", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity <BusinessBean> getByPKey(@ApiParam(value="参絪腹" )
+							@PathVariable("seq") String seq){
+		
+		Business entity =businessService.getByPKey(seq);
+		if(entity!=null) {
+			return ResponseEntity.ok(new BusinessBean(entity));
+		}
+		return ResponseEntity.notFound().build();
+	}
+	
+	
+	
+	
+	
 	
 	
 	@ApiResponses(value= {
