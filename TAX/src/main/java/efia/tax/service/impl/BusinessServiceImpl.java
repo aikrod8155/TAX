@@ -53,6 +53,18 @@ public class BusinessServiceImpl implements BusinessService{
 	public Business getByPKey(String seq) {
 		return businessDao.getByPKey(seq);
 	}
+
+	public int insert(Business business) {
+		return businessDao.insert(business);
+	}
+
+	public int update(Business business) {
+		return businessDao.update(business);
+	}
+
+	public int delete(String seq) {
+		return businessDao.delete(seq);
+	}
 	
 	
 

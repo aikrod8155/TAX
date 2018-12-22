@@ -143,6 +143,119 @@
 		</if>
 		</set>
 	</insert>
+	
+	<insert id="insert" parameterType="Business" >
+		insert into t_business
+		<set>
+		 seq=#{seq},
+			<if test="address!=null">
+			 address=#{address},
+		</if>
+		
+		<if test="head!=null">
+			 head=#{head},
+		</if>
+		<if test="name!=null">
+			 name=#{name},
+		</if>
+		<if test="capital!=null">
+			 capital=#{capital},
+		</if>
+		<if test="founding!=null">
+			 founding=#{founding},
+		</if>
+		<if test="receipt!=null">
+			 receipt=#{receipt},
+		</if>
+		<if test="typeCode1!=null">
+			 typeCode1=#{typeCode1},
+		</if>
+		<if test="typeName1!=null">
+			 typeName1=#{typeName1},
+		</if>
+		<if test="typeCode2!=null">
+			 typeCode2=#{typeCode2},
+		</if>
+		<if test="typeName2!=null">
+			 typeName2=#{typeName2},
+		</if>
+		
+		<if test="typeCode3!=null">
+			 typeCode3=#{typeCode3},
+		</if>
+		<if test="typeName3!=null">
+			 typeName3=#{typeName3},
+		</if>
+		<if test="typeCode4!=null">
+			 typeCode4=#{typeCode4},
+		</if>
+		<if test="typeName4!=null">
+			 typeName4=#{typeName4},
+		</if>
+		</set>
+	</insert>
+	
+	
+	
+	
+	<update id="update" parameterType="Business">
+		update  t_business 
+		<set>
+		<if test="address!=null">
+			 address=#{address},
+		</if>
+		
+		<if test="head!=null">
+			 head=#{head},
+		</if>
+		<if test="name!=null">
+			 name=#{name},
+		</if>
+		<if test="capital!=null">
+			 capital=#{capital},
+		</if>
+		<if test="founding!=null">
+			 founding=#{founding},
+		</if>
+		<if test="receipt!=null">
+			 receipt=#{receipt},
+		</if>
+		<if test="typeCode1!=null">
+			 typeCode1=#{typeCode1},
+		</if>
+		<if test="typeName1!=null">
+			 typeName1=#{typeName1},
+		</if>
+		<if test="typeCode2!=null">
+			 typeCode2=#{typeCode2},
+		</if>
+		<if test="typeName2!=null">
+			 typeName2=#{typeName2},
+		</if>
+		
+		<if test="typeCode3!=null">
+			 typeCode3=#{typeCode3},
+		</if>
+		<if test="typeName3!=null">
+			 typeName3=#{typeName3},
+		</if>
+		<if test="typeCode4!=null">
+			 typeCode4=#{typeCode4},
+		</if>
+		<if test="typeName4!=null">
+			 typeName4=#{typeName4},
+		</if>
+		</set>
+		where seq=#{seq}
+	</update>
+	
+	
+	
+	<delete id="delete" parameterType="String">
+		delete from t_business where seq=#{seq}
+	</delete>
+	
+	 
 
 
 </mapper>

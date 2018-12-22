@@ -42,7 +42,7 @@ public class BusinessController {
 			@ApiResponse(code=200,message="查詢成功"),
 	})
 	@ApiOperation(value="依統編查詢資料")
-	@RequestMapping(value="/business/{seq}", method=RequestMethod.GET)
+	@RequestMapping(value="/show/{seq}", method=RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity <BusinessBean> getByPKey(@ApiParam(value="統一編號" )
 							@PathVariable("seq") String seq){
@@ -65,9 +65,11 @@ public class BusinessController {
 			@ApiResponse(code=200,message="查詢成功"),
 	})
 	@ApiOperation(value="依條件查詢資料")
-	@RequestMapping(value="/business", method=RequestMethod.GET)
+	@RequestMapping(value="/list", method=RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<BusinessBean>> listByCondition(
+			@ApiParam(value="所在城市",required=false ,allowableValues="基隆市,臺北市,新北市,桃園市,新竹市,新竹縣,苗栗縣,台中市,彰化縣,南投縣,台南市,高雄市,屏東縣,宜蘭縣,花蓮縣,台東縣,澎湖縣,金門縣,連江縣")
+			@RequestParam(value="city", required=false) String city,
 			@ApiParam(value="地址",required=false )
 			@RequestParam(value="address", required=false) String address,
 			@ApiParam(value="統一編號",required=false )
@@ -93,7 +95,7 @@ public class BusinessController {
 			
 			){
 	
-		Map<String,Object> query=getQuery(address,seq,head,name,capital,founding,receipt,typeCode1,typeName1,limit,offset);
+		Map<String,Object> query=getQuery(address,seq,head,name,capital,founding,receipt,typeCode1,typeName1,limit,offset,city);
 		List<Business> entitys=businessService.listByCondition(query);
 		if(entitys==null || entitys.size()==0) {
 			return ResponseEntity.notFound().build();
@@ -104,12 +106,70 @@ public class BusinessController {
 		}
 		return ResponseEntity.ok(entityBeans);
 	}
+	@ApiResponses(value= {
+			@ApiResponse(code=500,message="查詢異常"),
+			@ApiResponse(code=200,message="查詢成功"),
+	})
+	@ApiOperation(value="新增")
+	@RequestMapping(value="/add", method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Integer> InsertByCondition(
+			@ApiParam(value="地址",required=false )
+			@RequestParam(value="address", required=false) String address,
+			@ApiParam(value="統一編號",required=false )
+			@RequestParam(value="seq", required=false) String seq,
+			@ApiParam(value="總部統編",required=false )
+			@RequestParam(value="head", required=false) String head,
+			@ApiParam(value="公司名稱",required=false )
+			@RequestParam(value="name", required=false) String name,
+			@ApiParam(value="資本額",required=false )
+			@RequestParam(value="capital", required=false) String capital,
+			@ApiParam(value="創立日期",required=false )
+			@RequestParam(value="founding", required=false) String founding,
+			@ApiParam(value="是否使用統一發票",required=false ,allowableValues="Y,N")
+			@RequestParam(value="receipt", required=false) String receipt,
+			@ApiParam(value="行業代號",required=false )
+			@RequestParam(value="typeCode1", required=false) String typeCode1,
+			@ApiParam(value="行業名稱",required=false )
+			@RequestParam(value="typeName1", required=false) String typeName1,
+			@ApiParam(value="行業代號",required=false )
+			@RequestParam(value="typeCode2", required=false) String typeCode2,
+			@ApiParam(value="行業名稱",required=false )
+			@RequestParam(value="typeName2", required=false) String typeName2,
+			@ApiParam(value="行業代號",required=false )
+			@RequestParam(value="typeCode3", required=false) String typeCode3,
+			@ApiParam(value="行業名稱",required=false )
+			@RequestParam(value="typeName3", required=false) String typeName3,
+			@ApiParam(value="行業代號",required=false )
+			@RequestParam(value="typeCode4", required=false) String typeCode4,
+			@ApiParam(value="行業名稱",required=false )
+			@RequestParam(value="typeName4", required=false) String typeName4
+			
+			){
+	
+		Business business=setQuery(address,seq,head,name,capital,founding,receipt,typeCode1,typeName1,typeCode2,typeName2,typeCode3,typeName3,typeCode4,typeName4);
+		int entitys=businessService.insert(business);
+		if(entitys==0 ) {
+			return ResponseEntity.notFound().build();
+		}
+		//List<BusinessBean> entityBeans=new ArrayList<BusinessBean>();
+		
+			//entityBeans.add(new BusinessBean(business));
+		
+		return ResponseEntity.ok(entitys);
+	}
 	
 	
-	private Map<String,Object> getQuery(String address,String seq,String head,String name,String capital,String founding,String receipt,String typeCode1,String typeName1,Integer limit,Integer offset){
+	private Map<String,Object> getQuery(String address,String seq,String head,String name,String capital,String founding,String receipt,String typeCode1,String typeName1,Integer limit,Integer offset,String city){
 		Map<String,Object> query=new HashMap<String,Object>();
+		if(StringUtils.isNotBlank(city)) {
+			query.put("address", city+"%");
+		}
 		if(StringUtils.isNotBlank(address)) {
 			query.put("address", "%"+address+"%");
+		}
+		if(StringUtils.isNotBlank(address) && StringUtils.isNotBlank(city)) {
+			query.put("address", city+address+"%");
 		}
 		if(StringUtils.isNotBlank(seq)) {
 			query.put("seq", seq);
@@ -145,5 +205,39 @@ public class BusinessController {
 		query.put("offset", offset);
 		return query;
 	}
+	
+	
+	
+	
+	
+	
+	private Business setQuery(String address,String seq,String head,String name,String capital,String founding,String receipt,String typeCode1,String typeName1,String typeCode2,String typeName2,String typeCode3,String typeName3,String typeCode4,String typeName4){
+		Business business=new Business();
+		business.setAddress(address);
+		business.setSeq(seq);
+		business.setHead(head);
+		business.setName(name);
+		business.setCapital(capital);
+		business.setFounding(founding);
+		business.setReceipt(receipt);
+		business.setTypeCode1(typeCode1);
+		business.setTypeName1(typeName1);
+		business.setTypeCode2(typeCode2);
+		business.setTypeName2(typeName2);
+		business.setTypeCode3(typeCode3);
+		business.setTypeName3(typeName3);
+		business.setTypeCode4(typeCode4);
+		business.setTypeName4(typeName4);
+		
+		return business;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

@@ -10,5 +10,7 @@ public interface BusinessDao {
 	List<Business> listByCondition(Map<String,Object> map);
 	Business getByPKey(String seq);
 	int create(Business business);
-	
+	int insert(Business business);
+	int update(Business business);
+	int delete(String seq);
 }

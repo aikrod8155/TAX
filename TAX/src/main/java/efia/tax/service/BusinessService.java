@@ -10,4 +10,7 @@ public interface BusinessService {
 	List<Business>listByCondition(Map<String ,Object>query);
 	Business getByPKey(String seq);
 	int reset();
+	int insert(Business business);
+	int update(Business business);
+	int delete(String seq);
 }
