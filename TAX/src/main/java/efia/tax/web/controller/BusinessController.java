@@ -159,6 +159,87 @@ public class BusinessController {
 		return ResponseEntity.ok(entitys);
 	}
 	
+	@ApiResponses(value= {
+			@ApiResponse(code=500,message="查詢異常"),
+			@ApiResponse(code=200,message="查詢成功"),
+	})
+	@ApiOperation(value="修改")
+	@RequestMapping(value="/update", method=RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity<Integer> UpdateByCondition(
+			@ApiParam(value="地址",required=false )
+			@RequestParam(value="address", required=false) String address,
+			@ApiParam(value="統一編號",required=false )
+			@RequestParam(value="seq", required=false) String seq,
+			@ApiParam(value="總部統編",required=false )
+			@RequestParam(value="head", required=false) String head,
+			@ApiParam(value="公司名稱",required=false )
+			@RequestParam(value="name", required=false) String name,
+			@ApiParam(value="資本額",required=false )
+			@RequestParam(value="capital", required=false) String capital,
+			@ApiParam(value="創立日期",required=false )
+			@RequestParam(value="founding", required=false) String founding,
+			@ApiParam(value="是否使用統一發票",required=false ,allowableValues="Y,N")
+			@RequestParam(value="receipt", required=false) String receipt,
+			@ApiParam(value="行業代號",required=false )
+			@RequestParam(value="typeCode1", required=false) String typeCode1,
+			@ApiParam(value="行業名稱",required=false )
+			@RequestParam(value="typeName1", required=false) String typeName1,
+			@ApiParam(value="行業代號",required=false )
+			@RequestParam(value="typeCode2", required=false) String typeCode2,
+			@ApiParam(value="行業名稱",required=false )
+			@RequestParam(value="typeName2", required=false) String typeName2,
+			@ApiParam(value="行業代號",required=false )
+			@RequestParam(value="typeCode3", required=false) String typeCode3,
+			@ApiParam(value="行業名稱",required=false )
+			@RequestParam(value="typeName3", required=false) String typeName3,
+			@ApiParam(value="行業代號",required=false )
+			@RequestParam(value="typeCode4", required=false) String typeCode4,
+			@ApiParam(value="行業名稱",required=false )
+			@RequestParam(value="typeName4", required=false) String typeName4
+			
+			){
+	
+		Business business=setQuery(address,seq,head,name,capital,founding,receipt,typeCode1,typeName1,typeCode2,typeName2,typeCode3,typeName3,typeCode4,typeName4);
+		int entitys=businessService.update(business);
+		if(entitys==0 ) {
+			return ResponseEntity.notFound().build();
+		}
+		//List<BusinessBean> entityBeans=new ArrayList<BusinessBean>();
+		
+			//entityBeans.add(new BusinessBean(business));
+		
+		return ResponseEntity.ok(entitys);
+	}
+	
+	
+	@ApiResponses(value= {
+			@ApiResponse(code=500,message="查詢異常"),
+			@ApiResponse(code=200,message="查詢成功"),
+	})
+	@ApiOperation(value="刪除")
+	@RequestMapping(value="/delete", method=RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Integer> DeleteByCondition(
+			
+			@ApiParam(value="統一編號",required=false )
+			@RequestParam(value="seq", required=false) String seq
+			){
+	
+		int entitys=businessService.delete(seq);
+		if(entitys==0 ) {
+			return ResponseEntity.notFound().build();
+		}
+		//List<BusinessBean> entityBeans=new ArrayList<BusinessBean>();
+		
+			//entityBeans.add(new BusinessBean(business));
+		
+		return ResponseEntity.ok(entitys);
+	}
+	
+	
+	
+	
 	
 	private Map<String,Object> getQuery(String address,String seq,String head,String name,String capital,String founding,String receipt,String typeCode1,String typeName1,Integer limit,Integer offset,String city){
 		Map<String,Object> query=new HashMap<String,Object>();
