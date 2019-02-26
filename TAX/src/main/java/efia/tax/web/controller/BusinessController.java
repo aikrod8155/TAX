@@ -218,7 +218,7 @@ public class BusinessController {
 			@ApiResponse(code=200,message="查詢成功"),
 	})
 	@ApiOperation(value="刪除")
-	@RequestMapping(value="/delete", method=RequestMethod.DELETE)
+	@RequestMapping(value="/delete/{seq}", method=RequestMethod.DELETE)
 	@ResponseBody
 	public ResponseEntity<Integer> DeleteByCondition(
 			
